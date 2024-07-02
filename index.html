@@ -11,6 +11,10 @@
         version    : 'v12.0'
       });
 
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+
       FB.AppEvents.logPageView();
     };
 
@@ -25,13 +29,14 @@
 </head>
 <body>
   <div id="status"></div>
-  <button onclick="checkLoginState();">Login with Facebook</button>
+  <button id="loginButton" onclick="checkLoginState();">Login with Facebook</button>
 
   <script>
     function statusChangeCallback(response) {
       console.log('statusChangeCallback');
       console.log(response);
       if (response.status === 'connected') {
+        document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.authResponse.userID + '!';
         testAPI();
       } else {
         document.getElementById('status').innerHTML = 'Please log into this webpage.';
