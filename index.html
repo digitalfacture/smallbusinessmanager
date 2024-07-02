@@ -5,7 +5,7 @@
   <script>
     window.fbAsyncInit = function() {
       FB.init({
-        appId      : '${FACEBOOK_APP_ID}', // Replace with your actual App ID
+        appId      : process.env.REACT_APP_FACEBOOK_APP_ID, // This will be replaced with the actual App ID during the build
         cookie     : true,
         xfbml      : true,
         version    : 'v12.0'
@@ -55,3 +55,4 @@
   </script>
 </body>
 </html>
+``
