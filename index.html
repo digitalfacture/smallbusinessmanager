@@ -1,1 +1,58 @@
-Hello World 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Facebook App</title>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : 'YOUR_APP_ID', // This will be replaced by your build process
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v12.0'
+      });
+      
+      FB.AppEvents.logPageView();   
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+  </script>
+</head>
+<body>
+  <div id="status"></div>
+  <button onclick="checkLoginState();">Login with Facebook</button>
+
+  <script>
+    function statusChangeCallback(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+      if (response.status === 'connected') {
+        testAPI();  
+      } else {
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into this webpage.';
+      }
+    }
+
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+
+    function testAPI() {
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me', function(response) {
+        console.log('Successful login for: ' + response.name);
+        document.getElementById('status').innerHTML =
+          'Thanks for logging in, ' + response.name + '!';
+      });
+    }
+  </script>
+</body>
+</html>
