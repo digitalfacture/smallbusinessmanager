@@ -5,13 +5,13 @@
   <script>
     window.fbAsyncInit = function() {
       FB.init({
-        appId      : 'YOUR_APP_ID', // This will be replaced by your build process
+        appId      : '${FACEBOOK_APP_ID}', // This will be replaced during the build process
         cookie     : true,
         xfbml      : true,
         version    : 'v12.0'
       });
-      
-      FB.AppEvents.logPageView();   
+
+      FB.AppEvents.logPageView();
     };
 
     (function(d, s, id){
@@ -32,10 +32,9 @@
       console.log('statusChangeCallback');
       console.log(response);
       if (response.status === 'connected') {
-        testAPI();  
+        testAPI();
       } else {
-        document.getElementById('status').innerHTML = 'Please log ' +
-          'into this webpage.';
+        document.getElementById('status').innerHTML = 'Please log into this webpage.';
       }
     }
 
