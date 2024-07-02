@@ -2,15 +2,29 @@
 <html>
 <head>
   <title>My Facebook App</title>
+</head>
+<body>
+  <!-- Facebook SDK Root Element -->
+  <div id="fb-root"></div>
+  <!-- Facebook SDK Script -->
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0&appId=392877173798689" nonce="yuRRSg2m"></script>
+  
+  <!-- Status Message -->
+  <div id="status"></div>
+
+  <!-- Facebook Login Button -->
+  <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="true"></div>
+  
   <script>
     window.fbAsyncInit = function() {
       FB.init({
         appId      : '392877173798689', // Your provided App ID
         cookie     : true,
         xfbml      : true,
-        version    : 'v12.0'
+        version    : 'v20.0'
       });
 
+      // Check login status on load
       FB.getLoginStatus(function(response) {
         statusChangeCallback(response);
       });
@@ -18,25 +32,10 @@
       FB.AppEvents.logPageView();
     };
 
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "https://connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-  </script>
-</head>
-<body>
-  <div id="status"></div>
-  <button id="loginButton" onclick="checkLoginState();">Login with Facebook</button>
-
-  <script>
     function statusChangeCallback(response) {
       console.log('statusChangeCallback');
       console.log(response);
       if (response.status === 'connected') {
-        document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.authResponse.userID + '!';
         testAPI();
       } else {
         document.getElementById('status').innerHTML = 'Please log into this webpage.';
