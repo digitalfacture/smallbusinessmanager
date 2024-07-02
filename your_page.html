@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Facebook App - User Page</title>
+</head>
+<body>
+  <h1>Welcome to Your Business Pages</h1>
+  <div id="pages"></div>
+
+  <script>
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      var results = regex.exec(location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    var accessToken = getUrlParameter('accessToken');
+
+    // Fetch the user's business pages
+    function fetchBusinessPages() {
+      if (accessToken) {
+        FB.api('/me/accounts', { access_token: accessToken }, function(response) {
+          if (response && !response.error) {
+            console.log(response);
+            var pages = response.data;
+            var pagesList = '<ul>';
+            pages.forEach(function(page) {
+              pagesList += '<li>' + page.name + '</li>';
+            });
+            pagesList += '</ul>';
+            document.getElementById('pages').innerHTML = pagesList;
+          } else {
+            console.error('Error fetching business pages:', response.error);
+          }
+        });
+      } else {
+        console.error('No access token found.');
+      }
+    }
+
+    window.onload = function() {
+      fetchBusinessPages();
+    }
+  </script>
+</body>
+</html>
