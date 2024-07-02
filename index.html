@@ -36,7 +36,8 @@
       console.log('statusChangeCallback');
       console.log(response);
       if (response.status === 'connected') {
-        testAPI();
+        // Redirect to your page after successful login
+        window.location.href = "your_page.html?accessToken=" + response.authResponse.accessToken;
       } else {
         document.getElementById('status').innerHTML = 'Please log into this webpage.';
       }
